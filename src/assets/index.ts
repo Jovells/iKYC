@@ -6,6 +6,10 @@ import Eth from './eth.svg'
 import GoldCoins from './gold-coins.svg'
 import Menu from './menu.svg'
 import Mobile from './mobile.svg'
+import EarnGold from './earn-gold.svg'
+import Instagram from './instagram.svg'
+import Telegram from './telegram.svg'
+import X from './x.svg'
 
 export {
     Logo,
@@ -15,5 +19,10 @@ export {
     Eth,
     GoldCoins,
     Menu,
-    Mobile
+    Mobile,
+    EarnGold,
+    Instagram,
+    Telegram,
+    X
+
 }
