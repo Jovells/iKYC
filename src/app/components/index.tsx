@@ -8,6 +8,8 @@ import Dex from "./Dex";
 import Spinner from "./Spinner";
 import DataGrid from "./DataGrid";
 import P2PMarket from "./P2PMarket";
+import SelectInput from "./SelectInput";
+import Faq from "./Faq";
 
 export {
     HorizontalNav,
@@ -17,5 +19,7 @@ export {
     Dex,
     Spinner,
     DataGrid,
-    P2PMarket
+    P2PMarket,
+    SelectInput,
+    Faq
 }
