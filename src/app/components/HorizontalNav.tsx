@@ -9,7 +9,7 @@ import NavLink from './NavLink';
 
 const HorizontalNav = () => {
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex flex-row justify-between items-center px-6 py-2 bg-[#181A20F2]">
+    <div className="h-[70px] w-full fixed top-0 left-0 right-0 z-[100] flex flex-row justify-between items-center px-6 py-2 bg-[#181A20F2]">
       <Image
         src={Logo}
         alt="Logo"
