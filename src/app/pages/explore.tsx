@@ -1,7 +1,7 @@
 import React from 'react'
 import HorizontalNav from '../components/HorizontalNav'
 
-const ExplorePage = () => {
+const Explore = () => {
   return (
     <div>
       <HorizontalNav />
@@ -9,4 +9,4 @@ const ExplorePage = () => {
   )
 }
 
-export default ExplorePage
+export default Explore
