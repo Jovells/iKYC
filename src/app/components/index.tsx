@@ -10,6 +10,7 @@ import DataGrid from "./DataGrid";
 import P2PMarket from "./P2PMarket";
 import SelectInput from "./SelectInput";
 import Faq from "./Faq";
+import Earn from './Earn'
 
 export {
     HorizontalNav,
@@ -21,5 +22,6 @@ export {
     DataGrid,
     P2PMarket,
     SelectInput,
-    Faq
+    Faq,
+    Earn
 }
