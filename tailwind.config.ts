@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss"
+import type { Config } from 'tailwindcss';
 
 const config = {
   darkMode: ["class"],
@@ -7,8 +7,7 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
-  prefix: "",
+  ],
   theme: {
     container: {
       center: true,
@@ -18,6 +17,12 @@ const config = {
       },
     },
     extend: {
+      theme:{
+        backgroundImage: {
+          'custom-gradient': 'linear-gradient(to bottom, #1F2932, #ffffff)',
+        },
+      },
+      customgradient: 'linear-gradient(to bottom, #000000, #000000)',
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -75,6 +80,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+};
 
-export default config
+export default config;
