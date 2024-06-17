@@ -1,8 +1,11 @@
 import React from 'react'
+import HorizontalNav from '../components/HorizontalNav'
 
 const ExplorePage = () => {
   return (
-    <div>ExplorePage</div>
+    <div>
+      <HorizontalNav />
+    </div>
   )
 }
 
