@@ -5,6 +5,7 @@ import AngleDown from './angle-down.svg'
 import Eth from './eth.svg'
 import GoldCoins from './gold-coins.svg'
 import Menu from './menu.svg'
+import Mobile from './mobile.svg'
 
 export {
     Logo,
@@ -13,5 +14,6 @@ export {
     AngleDown,
     Eth,
     GoldCoins,
-    Menu
+    Menu,
+    Mobile
 }
