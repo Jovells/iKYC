@@ -28,7 +28,7 @@ const Button: FC<Props> = ({ text, className, handleClick, loading, styles, icon
             disabled={isLoading} // Disable button when loading
             style={styles}
         >
-            {isLoading ? 'Loading...' : <div className='flex flex-row justify-start items-center space-x-3'>
+            {isLoading ? 'Loading...' : <div className='flex flex-row justify-center items-center space-x-3'>
                 <span>{text}</span>
                 {icon && <Image src={icon} alt="earn" width={20} />}
             </div>
