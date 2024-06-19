@@ -1,9 +1,11 @@
-import { fetchApplicantData } from "../../../zkPass/kyc/sumsub";
+import { fetchApplicantData } from "@/app/kyc/sumsub";
+import { NextResponse } from "next/server";
+
 export async function GET(
   Request: Request,
   { params }: { params: { userId: string } }
 ) {
   console.log("GET /api/user/[userId]", params);
   const applicant = await fetchApplicantData(params.userId);
-  return new Response(JSON.stringify(applicant));
+  return NextResponse.json(applicant);
 }

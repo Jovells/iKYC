@@ -9,6 +9,7 @@ export interface Applicant {
     firstName: string;
     firstNameEn: string;
     dob: string;
+    age?: number;
     gender: string;
     country: string;
     idDocs: {

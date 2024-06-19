@@ -265,6 +265,10 @@ export async function fetchApplicantData(
 ): Promise<Applicant | undefined> {
   try {
     const response = await axios(getApplicantData(externalUserId));
+    const applicantData = response.data as Applicant;
+    const age = calculateAge(applicantData.info.dob);
+    applicantData.info.age = age;
+
     return response.data;
   } catch (error: any) {
     console.log("Error:\n", error);
@@ -318,4 +322,15 @@ export async function fetchIdImage(applicantId: string, inspectionId: string) {
   } catch (error: any) {
     console.log("Error:\n", error);
   }
+}
+
+function calculateAge(dateOfBirth: string) {
+  const dob = new Date(dateOfBirth);
+  const now = new Date();
+
+  let age = now.getFullYear() - dob.getFullYear();
+  if (now < new Date(now.getFullYear(), dob.getMonth(), dob.getDate())) {
+    age--;
+  }
+  return age;
 }
