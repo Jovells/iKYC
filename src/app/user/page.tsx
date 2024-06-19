@@ -3,10 +3,11 @@ import React from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchApplicantData, fetchIdImage } from "../kyc/sumsub";
 import { useUser } from "@/app/hooks/useUser";
+import { Applicant } from "@/lib/types";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-export default function Kyc() {
+export default function UserPage() {
   const user = useUser();
 
   console.log("User: ", user);
@@ -14,7 +15,9 @@ export default function Kyc() {
   const { data: applicant } = useQuery({
     queryKey: ["applicant"],
     queryFn: () =>
-      fetch(BASE_URL + "/api/user/" + user?.id).then((res) => res.json()),
+      fetch(BASE_URL + "/api/user/" + user?.id).then((res) =>
+        res.json()
+      ) as Promise<Applicant>,
     enabled: !!user?.id,
   });
 
@@ -55,6 +58,9 @@ export default function Kyc() {
       </p>
       <p className="mb-2">
         <strong>Nationality:</strong> {applicant.info.country}
+      </p>
+      <p className="mb-2">
+        <strong>KYC Level:</strong> {applicant.info.review.levelName}
       </p>
     </div>
   );

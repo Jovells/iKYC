@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import SumsubWebSdk from "@sumsub/websdk-react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchAccessToken } from "./sumsub";
 import { useRouter } from "next/navigation";
 
@@ -34,7 +34,7 @@ export default function Kyc() {
         onMessage={(type: any, payload: any) => {
           console.log("onMessage", type, payload);
           if (payload.reviewStatus === "completed") {
-            router.push("/zkPass/user");
+            router.push("/user");
           }
         }}
         onError={(type: any, payload: any) => {

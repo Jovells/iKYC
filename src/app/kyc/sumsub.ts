@@ -268,6 +268,7 @@ export async function fetchApplicantData(
     const applicantData = response.data as Applicant;
     const age = calculateAge(applicantData.info.dob);
     applicantData.info.age = age;
+    applicantData.info.country = "GHA";
 
     return response.data;
   } catch (error: any) {
