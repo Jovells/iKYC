@@ -94,3 +94,8 @@ export interface VerificationStepsResult {
     imageStatuses: any[];
   };
 }
+
+export type User = {
+  id: string;
+  email?: string;
+};

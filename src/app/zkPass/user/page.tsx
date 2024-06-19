@@ -4,6 +4,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchApplicantData, fetchIdImage } from "../kyc/sumsub";
 import { useUser } from "@/app/hooks/useUser";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 export default function Kyc() {
   const user = useUser();
 
@@ -11,7 +13,8 @@ export default function Kyc() {
 
   const { data: applicant } = useQuery({
     queryKey: ["applicant"],
-    queryFn: () => fetchApplicantData(user!.id),
+    queryFn: () =>
+      fetch(BASE_URL + "/api/user/" + user?.id).then((res) => res.json()),
     enabled: !!user?.id,
   });
 
@@ -30,8 +33,9 @@ export default function Kyc() {
     <div className="bg-gray-100 p-4">
       <h1 className="text-2xl font-bold mb-4">KYC Details</h1>
       <h1 className="text-xl font-bold mb-2">Applicant Information</h1>
-      {idImages?.map((image) => (
+      {idImages?.map((image, i) => (
         <img
+          key={i}
           src={"data:" + image.contentType + ";base64," + image.data}
           className="w-32 h-32 object-cover rounded"
           alt="ID Image"
