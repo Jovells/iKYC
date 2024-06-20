@@ -15,12 +15,18 @@ import UserContext from "./userContext";
 // Create a UserProvider component to wrap your app with
 const UserProvider = ({
   children,
-  session,
-}: {
+}: // session,
+{
   children: React.ReactNode;
-  session: Session | null;
+  // session: Session | null;
 }) => {
-  const [user, setUser] = useState<User | null>(session?.user || null);
+  const [user, setUser] = useState<User | null>(
+    {
+      id: "hjh",
+      name: "John Doe",
+      email: "a@b.com",
+    } || null
+  );
 
   return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 };

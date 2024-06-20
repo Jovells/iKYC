@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button } from "../components";
-import AuthButton from "../components/AuthButton.server";
+// import AuthButton from "../components/AuthButton.server";
 
 interface InputFieldProps {
   label: string;
@@ -49,7 +49,7 @@ const MyComponent: React.FC = () => {
           <InputField label="Username" inputType="text" id="username" />
           <InputField label="Email" inputType="email" id="email" />
         </form>
-        <AuthButton />
+        {/* <AuthButton /> */}
 
         <Divider text="or" />
         <div className="flex justify-center mt-6 w-full">

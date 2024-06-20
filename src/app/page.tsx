@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "./components";
 import Image from "next/image";
 import { LandingImage } from "@/assets";
-import AuthButton from "./components/AuthButton.server";
+// import AuthButton from "./components/AuthButton.server";
 
 type NavItemProps = {
   label: string;
@@ -131,7 +131,7 @@ const MyComponent: React.FC = () => {
         </section>
 
         <section className="relative self-center mt-32 w-full max-w-[1293px] max-md:mt-10 max-md:max-w-full">
-          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+          <div className="flex gap-5 max-md:flex-col max-md:gap-0 relative">
             <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
               <div className="flex relative flex-col text-6xl tracking-tighter leading-4 max-md:mt-10 max-md:max-w-full max-md:text-4xl max-md:leading-3">
                 <div className="text-white ">
@@ -146,7 +146,7 @@ const MyComponent: React.FC = () => {
                   eaque ipsa quae ab illo inventore
                 </div>
                 <div className="flex gap-5 justify-between self-start mt-6 text-sm font-medium tracking-tight leading-4">
-                  <AuthButton></AuthButton>
+                  <Button>Signin</Button>
                   <div className="flex gap-1 justify-center px-5 py-2.5 text-gray-200 rounded-lg border border-sky-600 border-solid bg-blue-500 bg-opacity-0">
                     <div className="my-auto">Know Us More</div>
                     <IconButton
@@ -158,14 +158,14 @@ const MyComponent: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+            <div className="absolute right-0">
               <Image
                 width={500}
                 height={600}
                 loading="lazy"
                 src={LandingImage}
                 alt="icon14"
-                className="grow mt-10 w-full aspect-[1.49] max-md:mt-10 max-md:max-w-full"
+                // className="grow mt-10 w-full aspect-[1.49] max-md:mt-10 max-md:max-w-full"
               />
             </div>
           </div>
