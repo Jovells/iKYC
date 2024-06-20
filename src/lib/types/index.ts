@@ -1,3 +1,5 @@
+import { Session } from "next-auth";
+
 export interface Applicant {
   id: string;
   createdAt: string;
@@ -96,7 +98,4 @@ export interface VerificationStepsResult {
   };
 }
 
-export type User = {
-  id: string;
-  email?: string;
-};
+export type User = Session["user"];

@@ -1,229 +1,229 @@
-"use client";
-import { useState } from "react";
-import styles from "./page.module.css";
-import TransgateConnect from "@zkpass/transgate-js-sdk";
-import styled from "styled-components";
-import JSONPretty from "react-json-pretty";
-import { verifyEVMMessageSignature } from "./helper";
-import { Result } from "./types";
+import React from "react";
+import { Button } from "./components";
+import Image from "next/image";
+import { LandingImage } from "@/assets";
+import AuthButton from "./components/AuthButton.server";
 
-const FormGrid = styled.div`
-  display: grid;
-  grid-gap: 36px;
-  grid-template-columns: 800px;
-  margin: 3rem auto;
-`;
+type NavItemProps = {
+  label: string;
+};
 
-const FromContainer = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
-`;
+type IconButtonProps = {
+  src: string;
+  alt: string;
+  className?: string;
+};
 
-const FormItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  margin-bottom: 1rem;
-`;
+type SectionCardProps = {
+  src: string;
+  alt: string;
+  label: string;
+};
 
-const Label = styled.div`
-  text-align: right;
-  font-size: 16px;
-  font-weight: bold;
-  color: #ffffff;
-  margin-bottom: 0.5rem;
-`;
+type HighlightCardProps = {
+  icon: string;
+  alt: string;
+  title: string;
+  description: string;
+};
 
-const Input = styled.input`
-  display: block;
-  background-color: #ffffff;
-  border-radius: 5px;
-  height: 35px;
-  line-height: 35px;
-  width: 100%;
-  padding: 0 18px;
-  outline: none;
-  color: #000000;
-`;
+const NavItem: React.FC<NavItemProps> = ({ label }) => (
+  <div className="justify-center px-5 py-2.5 rounded-lg">{label}</div>
+);
 
-const Button = styled.button<{ disabled?: boolean }>`
-  position: relative;
-  display: block;
-  min-width: 120px;
-  height: 35px;
-  line-height: 35px;
-  padding: 0 18px;
-  text-align: center;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  background: #c5ff4a;
-  color: var(--color-black);
-  cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
-  &:active {
-    border: 0.5px solid #898989;
-    color: #0a0a0aab;
-  }
-`;
+const IconButton: React.FC<IconButtonProps> = ({
+  src,
+  alt,
+  className = "shrink-0 my-auto w-2 aspect-square",
+}) => <img loading="lazy" src={src} alt={alt} className={className} />;
 
-const RightContainer = styled.div`
-  grid-column: 2 / 3;
-`;
+const SectionCard: React.FC<SectionCardProps> = ({ src, alt, label }) => (
+  <div className="flex gap-2.5 justify-between px-3 py-2 rounded-lg bg-zinc-800 bg-opacity-0">
+    <div className="flex gap-2 justify-between px-px">
+      <img
+        loading="lazy"
+        src={src}
+        alt={alt}
+        className="shrink-0 aspect-[0.93] w-[15px]"
+      />
+      <div>{label}</div>
+    </div>
+    <IconButton
+      src="https://cdn.builder.io/api/v1/image/assets/TEMP/fc013798f86248751e9e2c623b1b82456472032df292f09820009047782f5098?apiKey=54c52d026a6a417bb3deffe3afd37be8&"
+      alt="icon"
+    />
+  </div>
+);
 
-const Title = styled.h2`
-  color: #ffffff;
-  text-align: center;
-`;
+const HighlightCard: React.FC<HighlightCardProps> = ({
+  icon,
+  alt,
+  title,
+  description,
+}) => (
+  <div className="flex gap-5 justify-between leading-4 text-neutral-700 max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
+    <div className="flex flex-col max-md:max-w-full">
+      <div className="flex gap-2.5 self-start leading-[114%]">
+        <img
+          loading="lazy"
+          src={icon}
+          alt={alt}
+          className="shrink-0 my-auto border-blue-500 border-solid aspect-[33.33] border-[3px] stroke-[2.5px] stroke-blue-500 w-[70px]"
+        />
+        <div className="flex-auto">{title}</div>
+      </div>
+      <div className="mt-7 text-3xl font-medium tracking-tight text-sky-600 max-md:max-w-full">
+        We provide <span className="text-sky-600">Seamless</span> Flows <br />
+      </div>
+      <div className="mt-5 text-3xl font-medium tracking-tight leading-4 max-md:max-w-full">
+        {description}
+      </div>
+      <div className="mt-8 max-md:max-w-full">
+        ed ut perspiciatis unde omnis iste natus error sit voluptatem
+        accusantium doloremque l<br />
+        audantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+      </div>
+    </div>
+    <img
+      loading="lazy"
+      src="https://cdn.builder.io/api/v1/image/assets/TEMP/277cebbb5a3747abfe62318e73e357b0d10ad603bf0f875546b02c2d2af4a9a0?apiKey=54c52d026a6a417bb3deffe3afd37be8&"
+      alt="icon"
+      className="shrink-0 my-auto max-w-full rounded-full aspect-[1.01] w-[156px]"
+    />
+  </div>
+);
 
-export default function Home() {
-  const [appid1, setAppid1] = useState<string>(
-    "39a00e9e-7e6d-461e-9b9d-d520b355d1c0"
-  );
-  const [appid2, setAppid2] = useState<string>(
-    "39a00e9e-7e6d-461e-9b9d-d520b355d1c0"
-  );
-  const [value1, setValue1] = useState<string>(
-    "c7eab8b7d7e44b05b41b613fe548edf5"
-  );
-  const [value2, setValue2] = useState<string>(
-    "c7eab8b7d7e44b05b41b613fe548edf5"
-  );
-  const [value3, setValue3] = useState<string>(
-    "762be634cfa1473eaaf374fa48504886"
-  );
-
-  const [result, setResult] = useState<any>();
-  const [result2, setResult2] = useState<any>();
-
-  const start = async (schemas: string[], appid: string) => {
-    try {
-      const connector = new TransgateConnect(appid);
-
-      const isAvailable = await connector.isTransgateAvailable();
-      if (!isAvailable) {
-        return alert(
-          `Please install zkPass TransGate
-https://chromewebstore.google.com/detail/zkpass-transgate/afkoofjocpbclhnldmmaphappihehpma
-`
-        );
-      }
-
-      const resultList: any[] = [];
-      while (schemas.length > 0) {
-        const schemaId = schemas.shift() as string;
-
-        const res = (await connector.launch(schemaId)) as Result;
-        resultList.push(res);
-
-        const verifyResult = verifyEVMMessageSignature(
-          res.taskId,
-          schemaId,
-          res.uHash,
-          res.publicFieldsHash,
-          res.validatorSignature,
-          res.validatorAddress
-        );
-        console.log("verifyResult", verifyResult);
-      }
-      if (resultList.length == 1) {
-        setResult(resultList);
-      } else {
-        setResult2(resultList);
-      }
-    } catch (err) {
-      alert(JSON.stringify(err));
-      console.log("error", err);
-    }
-  };
+const MyComponent: React.FC = () => {
+  const navItems = [
+    "Visit iExchange",
+    "About Us",
+    "Already have an Account? Log In",
+    "Sign Up",
+  ];
 
   return (
-    <main className={styles.main}>
-      <Title>zkPass Transgate JS-SDK Demo</Title>
-      <FormGrid>
-        <FromContainer>
-          <FormItem>
-            <Label>Appid:</Label>
-            <Input
-              value={appid1}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setAppid1(e.target.value)
-              }
+    <div className="flex flex-col">
+      <main className="flex overflow-hidden relative flex-col px-14 pt-5 pb-20 mt-0 w-full min-h-[735px] max-md:px-5 max-md:max-w-full">
+        <img
+          loading="lazy"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/fbdb1c44db3880a915880e4f7e98d406ef98ab3976eebdf95639f056450bcf8e?apiKey=54c52d026a6a417bb3deffe3afd37be8&"
+          alt=""
+          className="object-cover absolute inset-0 size-full"
+        />
+        <section className="flex relative gap-5 justify-between w-full max-md:flex-wrap max-md:max-w-full">
+          <div className="flex gap-1 justify-center self-start mt-3.5 whitespace-nowrap">
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/9b30dd30f24fc07dff7225adab9d2681117d35cfd3c3d0535526929e8da387c2?apiKey=54c52d026a6a417bb3deffe3afd37be8&"
+              alt="icon12"
+              className="shrink-0 my-auto aspect-square w-[29px]"
             />
-          </FormItem>
-          <FormItem>
-            <Label>Schema Id:</Label>
-            <Input
-              value={value1}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setValue1(e.target.value)
-              }
+            <div className="flex gap-1.5 items-start pt-2.5 pb-px">
+              <div className="text-xl text-white">i</div>
+              <div className="text-2xl font-semibold text-sky-400">Kyc</div>
+            </div>
+          </div>
+          <nav className="flex gap-5 justify-between text-sm font-medium tracking-tight leading-4 text-gray-200 max-md:flex-wrap">
+            {navItems.map((label, index) => (
+              <NavItem key={index} label={label} />
+            ))}
+          </nav>
+        </section>
+
+        <section className="relative self-center mt-32 w-full max-w-[1293px] max-md:mt-10 max-md:max-w-full">
+          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+            <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
+              <div className="flex relative flex-col text-6xl tracking-tighter leading-4 max-md:mt-10 max-md:max-w-full max-md:text-4xl max-md:leading-3">
+                <div className="text-white ">
+                  Make your Life Easier <br />
+                </div>
+                <div className="mt-4 text-white ">
+                  Relief yourself from Stress <br />
+                </div>
+                <div className="mt-8 text-sm tracking-tight text-white max-md:max-w-full">
+                  ed ut perspiciatis unde omnis iste natus error sit voluptatem
+                  accusantium doloremque l<br /> audantium, totam rem aperiam,
+                  eaque ipsa quae ab illo inventore
+                </div>
+                <div className="flex gap-5 justify-between self-start mt-6 text-sm font-medium tracking-tight leading-4">
+                  <AuthButton></AuthButton>
+                  <div className="flex gap-1 justify-center px-5 py-2.5 text-gray-200 rounded-lg border border-sky-600 border-solid bg-blue-500 bg-opacity-0">
+                    <div className="my-auto">Know Us More</div>
+                    <IconButton
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/dd4f6d0dd39ee8cf6e75fb125db4b9857ac0b202951f6b96d0d43eed70949d92?apiKey=54c52d026a6a417bb3deffe3afd37be8&"
+                      alt="icon13"
+                      className="shrink-0 w-6 aspect-square"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+              <Image
+                width={500}
+                height={600}
+                loading="lazy"
+                src={LandingImage}
+                alt="icon14"
+                className="grow mt-10 w-full aspect-[1.49] max-md:mt-10 max-md:max-w-full"
+              />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="flex flex-col items-center px-16 pb-20 w-full text-sm font-medium tracking-tight leading-4 text-sky-700 bg-gray-50 max-md:px-5 max-md:max-w-full">
+        <section className="flex z-10 justify-center items-center px-16 py-20 mt-0 mb-20 w-full bg-gray-50 rounded-md shadow-lg max-w-[1200px] max-md:px-5 max-md:mb-10 max-md:max-w-full">
+          <div className="flex flex-col max-w-full w-[951px]">
+            <HighlightCard
+              icon="https://cdn.builder.io/api/v1/image/assets/TEMP/0521ccd1c0ed7c075cd2a776207da6350b8b3c40e2a5bd3ea5aa61e3b453c61a?apiKey=54c52d026a6a417bb3deffe3afd37be8&"
+              alt="highlight icon"
+              title="How iKyc can be helpful"
+              description="Concerning your KYC’s"
             />
-          </FormItem>
-          <FormItem>
-            <RightContainer>
-              <Button onClick={() => start([value1], appid1)}>
-                Start Single Schema
-              </Button>
-            </RightContainer>
-          </FormItem>
-          <FormItem>
-            {result && (
-              <JSONPretty
-                themeClassName="custom-json-pretty"
-                id="json-pretty"
-                data={result}></JSONPretty>
-            )}
-          </FormItem>
-        </FromContainer>
-        <FromContainer>
-          <FormItem>
-            <Label>Appid:</Label>
-            <Input
-              value={appid2}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setAppid2(e.target.value)
-              }
-            />
-          </FormItem>
-          <FormItem>
-            <Label>Schema Id1:</Label>
-            <Input
-              value={value2}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setValue2(e.target.value)
-              }
-            />
-          </FormItem>
-          <FormItem>
-            <Label>Schema Id2:</Label>
-            <Input
-              value={value3}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setValue3(e.target.value)
-              }
-            />
-          </FormItem>
-          <FormItem>
-            <RightContainer>
-              <Button onClick={() => start([value2, value3], appid2)}>
-                Start multi-schemas
-              </Button>
-            </RightContainer>
-          </FormItem>
-          <FormItem>
-            {result2 && (
-              <JSONPretty
-                themeClassName="custom-json-pretty"
-                id="json-pretty1"
-                data={result2}></JSONPretty>
-            )}
-          </FormItem>
-        </FromContainer>
-      </FormGrid>
-    </main>
+            <div className="flex gap-5 px-px mt-14 w-full whitespace-nowrap max-md:flex-wrap max-md:mt-10 max-md:max-w-full">
+              {["Government", "Business", "Household", "Utilities"].map(
+                (label, idx) => (
+                  <div
+                    key={idx}
+                    className="flex flex-1 gap-1 justify-center px-5 py-2.5 bg-white rounded-lg shadow-lg">
+                    <IconButton
+                      src={`http://b.io/ext_${20 + idx * 2}-`}
+                      alt={`${label} icon`}
+                    />
+                    <div className="my-auto">{label}</div>
+                    <IconButton
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/0e0300b9f2b5a09c2cbd776e3b3f3036bd0eea17be5603da6a6b429f56aec0a1?apiKey=54c52d026a6a417bb3deffe3afd37be8&"
+                      alt="next icon"
+                    />
+                  </div>
+                )
+              )}
+            </div>
+            <div className="flex gap-5 px-px mt-8 w-full max-md:flex-wrap max-md:max-w-full">
+              {["Education", "Taxations", "Credit and Loans", "Employment"].map(
+                (label, idx) => (
+                  <div
+                    key={idx}
+                    className="flex flex-1 gap-1 justify-center px-5 py-2.5 whitespace-nowrap bg-white rounded-lg shadow-lg">
+                    <IconButton
+                      src={`http://b.io/ext_${26 + idx * 2}-`}
+                      alt={`${label} icon`}
+                    />
+                    <div className="my-auto">{label}</div>
+                    <IconButton
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/0e0300b9f2b5a09c2cbd776e3b3f3036bd0eea17be5603da6a6b429f56aec0a1?apiKey=54c52d026a6a417bb3deffe3afd37be8&"
+                      alt="next icon"
+                    />
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+        </section>
+      </footer>
+    </div>
   );
-}
+};
+
+export default MyComponent;

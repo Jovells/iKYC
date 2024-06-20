@@ -10,19 +10,20 @@ import EarnGold from './earn-gold.svg'
 import Instagram from './instagram.svg'
 import Telegram from './telegram.svg'
 import X from './x.svg'
+import LandingImage from "./landingImage.png";
 
 export {
-    Logo,
-    Settings,
-    SwapIcon,
-    AngleDown,
-    Eth,
-    GoldCoins,
-    Menu,
-    Mobile,
-    EarnGold,
-    Instagram,
-    Telegram,
-    X
-
-}
+  Logo,
+  Settings,
+  SwapIcon,
+  AngleDown,
+  Eth,
+  GoldCoins,
+  Menu,
+  Mobile,
+  EarnGold,
+  Instagram,
+  Telegram,
+  X,
+  LandingImage,
+};

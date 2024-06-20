@@ -267,6 +267,7 @@ export async function fetchApplicantData(
     const response = await axios(getApplicantData(externalUserId));
     const applicantData = response.data as Applicant;
     const age = calculateAge(applicantData.info.dob);
+    applicantData.info.country = "GHA";
     applicantData.info.age = age;
 
     return response.data;
